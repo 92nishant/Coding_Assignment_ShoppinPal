@@ -1,0 +1,25 @@
+version: '3'
+services:
+  mongo:
+    container_name: mongo
+    image: "mongo"
+    restart: always
+    ports:
+      - "27017:27017"
+  app:
+    container_name: docker-node-mongo
+    restart: always
+    build: .
+    command: npm start
+    ports:
+      - '3003:3000'
+    volumes:
+      - .:/app
+      - /app/node_module
+    depends_on:
+      - "mongo"
+  adminmongo:
+    image: "mrvautin/adminmongo"
+    ports:
+      - "1234:1234"
+ 
